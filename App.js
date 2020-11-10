@@ -7,15 +7,18 @@ import {
   Text,
   View,
   Pressable,
+  Image,
 } from "react-native";
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Slider from '@react-native-community/slider';
+import {questions} from './questions.js';
+import { Directions } from "react-native-gesture-handler";
 
-
-
+//Menuu navigatsioon
 export default () => {
+  
   const Stack = createStackNavigator();
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -30,44 +33,116 @@ export default () => {
           name="Avaleht"
           component={HomeScreen}
         />
-        <Stack.Screen name="Testid" component={TestScreen} />
+        <Stack.Screen name="Testisätted" component={TestScreen} />
         <Stack.Screen name="Seade1" component={Option1} /> 
-        <Stack.Screen name="Seade2" component={Option2} />   
+        <Stack.Screen name="Seade2" component={Option2} />
+        <Stack.Screen name="Testid" component={Testid} />   
         </Stack.Navigator>
       </NavigationContainer>
   );
 };
 }
-
+//Menuu
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       
       <Text style={{ color: "white", fontSize: 36,marginBottom:50,}}>Tere tulemast!</Text>
       
-      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Testid')}><Text style = {styles.text}>Alusta!</Text></Pressable>
+      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Testisätted')}><Text style = {styles.text}>Alusta!</Text></Pressable>
       <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Seade1')}><Text style = {styles.text}>Seade 1</Text></Pressable>
-      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Seade2')}><Text style = {styles.text}>Seade 2</Text></Pressable>  
+      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Seade2')}><Text style = {styles.text}>About</Text></Pressable>  
       <StatusBar style="auto" />
   
   </View>
   )
 }
 
-const TestScreen = () => {
+//Testi satted
+const TestScreen = ({navigation}) => {
+  const [testValue, setSliderValue] = useState(0);
+  const [timeValue, setSliderValue1] = useState(0);
+    
   return(
     <View style={styles.ScreenTestCont}>
-    <Text style={styles.textScreenTest}>Palun vali mitu küsimust testis on.</Text>
-
+    <Text style={styles.textScreenPref}>Palun vali mitu küsimust testis on*.</Text>
+    <Text style={styles.textScreenPref}>{testValue} küsimust</Text>
+    
     <Slider
     style={{width: 200, height: 40}}
-    minimumValue={0}
+    minimumValue={1}
     maximumValue={15}
+    step={1}
+    onValueChange={(id) => setSliderValue(id)}
+    testValue={testValue}
     minimumTrackTintColor="#1B98E0"
     maximumTrackTintColor="#1B98E0"
     thumbTintColor= '#1B98E0'
-    
     />
+
+    <Text style={styles.textScreenPref}>Vali ajalimiit.</Text>
+    <Text style={styles.textScreenPref}>{timeValue} min</Text>
+    
+    <Slider
+    style={{width: 200, height: 40}}
+    minimumValue={1}
+    maximumValue={30}
+    step={1}
+    onValueChange={(id) => setSliderValue1(id)}   
+    timeValue={timeValue}
+    minimumTrackTintColor="#1B98E0"
+    maximumTrackTintColor="#1B98E0"
+    thumbTintColor= '#1B98E0'
+    />  
+    <View>
+    { testValue > 0 &&
+      <Pressable
+       style={({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0', },
+       styles.button, <View opacity={1} />]} onPress={() => navigation.navigate('Testid', {time : timeValue, test: testValue})}>  
+      <Text style = {styles.text}>Jätka</Text>
+       </Pressable>
+    }  
+    </View>
+    <Text style={{fontSize: 18,color: "white",fontFamily:"Poppins_400Regular"}}>* märgitud väljad on kohustuslikud.</Text>
+  </View>
+  ) 
+};
+const Testid = ({route, navigation}) => {
+  const { time } = route.params;
+  const { test } = route.params;
+  
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [showScore, setShowScore] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const handleAnswerButtonClick = (answerOption) => {
+    const nextQuestion = currentQuestion + 1;
+    setCurrentQuestion(nextQuestion);
+
+    if (nextQuestion < test) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      alert('Oled jõudnud testi lõppu!');
+    }
+  };
+  
+  console.log(score)
+  return( 
+    <View style={styles.textScreenPrefCont}>
+     
+    
+     <Text style = {styles.textScreenPref}>{currentQuestion} / {test}</Text>
+
+    <Text style = {styles.textScreenQuestion}>{questions[[currentQuestion]].questionText}</Text>
+    <Image style={{height:'30%',width:'70%'}} source ={questions[[currentQuestion]].imgPath}/>
+    {
+        questions[currentQuestion].answerOptions.map((answerOption, index) => (
+          <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.questionButton]}
+          onPress={() => handleAnswerButtonClick()}><Text style = {styles.text}>{answerOption.answerText}</Text></Pressable>
+    ))}
+    
+   
+    
     </View>
   ) 
 };
@@ -75,17 +150,18 @@ const TestScreen = () => {
 const Option1 = () => {
   return(
     <View style={styles.container}>
-    <Text style={styles.textScreenTest}>Under construction.</Text>
+    <Text style={styles.textScreenPref}>Under construction.</Text>
     </View>
   ) 
 };
 const Option2 = () => {
   return(
     <View style={styles.container}>
-    <Text style={styles.textScreenTest}>Under construction.</Text>
+    <Text style={styles.textScreenPref}>Under construction.</Text>
     </View>
   ) 
 };
+//stiil
 const styles = StyleSheet.create({
   container: {
     fontFamily: "Poppins_400Regular",
@@ -104,6 +180,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 5,
   },
+  questionButton: {
+    borderRadius: 8,
+    margin: 16,
+    height: 60,
+    width: '70%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
   text:{
     fontFamily: "Poppins_400Regular",
     color: "white",
@@ -113,7 +198,7 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 5,
   },
-  textScreenTest:{
+  textScreenPref:{
     fontFamily: "Poppins_400Regular",
     color: "white",
     textAlign: "center",
@@ -129,5 +214,32 @@ const styles = StyleSheet.create({
     backgroundColor: "#26537D",
     alignItems: "center",
     justifyContent: "flex-start",    
+  },
+  textScreenPrefCont:{
+    flex: 1,
+    flexDirection:'column',
+    backgroundColor: "#26537D",
+    alignItems: "center",
+    justifyContent: "flex-start", 
+  },
+
+  textScreenTests:{
+    fontFamily: "Poppins_400Regular",
+    color: "white",
+    textAlign: "center",
+    fontSize: 20,
+    margin: 15,
+    borderRadius: 5,
+    alignItems: "flex-end",
+  },
+
+  textScreenQuestion:{
+    fontFamily: "Poppins_400Regular",
+    color: "white",
+    textAlign: "center",
+    justifyContent: "flex-start",
+    fontSize: 30,
+    margin: 12,
+    borderRadius: 5,
   },
 });
