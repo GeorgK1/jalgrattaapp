@@ -50,7 +50,7 @@ const HomeScreen = ({ navigation }) => {
       <Text style={{ color: "white", fontSize: 36,marginBottom:50,}}>Tere tulemast!</Text>
       
       <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Testisätted')}><Text style = {styles.text}>Alusta!</Text></Pressable>
-      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Seade1')}><Text style = {styles.text}>Seade 1</Text></Pressable>
+      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Seade1')}><Text style = {styles.text}>Jalgratturi meelespea</Text></Pressable>
       <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Seade2')}><Text style = {styles.text}>About</Text></Pressable>  
       <StatusBar style="auto" />
   
@@ -114,35 +114,43 @@ const Testid = ({route, navigation}) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
-
-  const handleAnswerButtonClick = (answerOption) => {
+  var randomNumber = Math.floor(Math.random()*10)+1
+  console.log(randomNumber)
+  const handleAnswerButtonClick = (isCorrect) => {
+    if (isCorrect){
+      setScore(score + 1);
+    }
     const nextQuestion = currentQuestion + 1;
     setCurrentQuestion(nextQuestion);
 
     if (nextQuestion < test) {
       setCurrentQuestion(nextQuestion);
     } else {
-      alert('Oled jõudnud testi lõppu!');
+      setShowScore(true);
     }
   };
   
-  console.log(score)
   return( 
     <View style={styles.textScreenPrefCont}>
      
-    
-     <Text style = {styles.textScreenPref}>{currentQuestion} / {test}</Text>
+    {showScore ? (
+      <View style={styles.container}>
+      <Text style={styles.textScreenPref}>Sa said {score}/{test} õigesti</Text>
+      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Testisätted')}><Text style = {styles.text}>Uuesti!</Text></Pressable>
+      </View>
+    ) : (
+      <>
+      <Text style = {styles.textScreenPref}>{currentQuestion+1} / {test}</Text>
 
-    <Text style = {styles.textScreenQuestion}>{questions[[currentQuestion]].questionText}</Text>
-    <Image style={{height:'30%',width:'70%'}} source ={questions[[currentQuestion]].imgPath}/>
-    {
-        questions[currentQuestion].answerOptions.map((answerOption, index) => (
-          <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.questionButton]}
-          onPress={() => handleAnswerButtonClick()}><Text style = {styles.text}>{answerOption.answerText}</Text></Pressable>
-    ))}
-    
-   
-    
+      <Text style = {styles.textScreenQuestion}>{questions[[currentQuestion]].questionText}</Text>
+      <Image style={{height:'30%',width:'70%'}} source ={questions[[currentQuestion]].imgPath}/>
+      {
+          questions[currentQuestion].answerOptions.map((answerOption) => (
+            <Pressable style={ ({ pressed }) => [{backgroundColor: !pressed ? '#1B98E0' : answerOption.isCorrect ? "green" : !answerOption.isCorrect ? "red":  '#13293D'}, styles.questionButton]}
+            onPress={() => handleAnswerButtonClick(answerOption.isCorrect)}><Text style = {styles.text}>{answerOption.answerText}</Text></Pressable>
+      ))}
+    </>
+    )}
     </View>
   ) 
 };
@@ -150,7 +158,8 @@ const Testid = ({route, navigation}) => {
 const Option1 = () => {
   return(
     <View style={styles.container}>
-    <Text style={styles.textScreenPref}>Under construction.</Text>
+    <Text style={styles.textScreenPref}>Nõuetele vastav jalgratas.</Text>
+    <Image style={{height:'50%',width:'100%'}} source ={require('./assets/option1.png')}/>
     </View>
   ) 
 };
