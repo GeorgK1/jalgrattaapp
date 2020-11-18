@@ -8,13 +8,15 @@ import {
   View,
   Pressable,
   Image,
+  ScrollView,
+  Animated,
 } from "react-native";
 import 'react-native-gesture-handler';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Slider from '@react-native-community/slider';
 import {questions} from './questions.js';
-import { Directions } from "react-native-gesture-handler";
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 //Menuu navigatsioon
 export default () => {
@@ -50,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
       <Text style={{ color: "white", fontSize: 36,marginBottom:50,}}>Tere tulemast!</Text>
       
       <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Testisätted')}><Text style = {styles.text}>Alusta!</Text></Pressable>
-      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Seade1')}><Text style = {styles.text}>Jalgratturi meelespea</Text></Pressable>
+      
       <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Seade2')}><Text style = {styles.text}>About</Text></Pressable>  
       <StatusBar style="auto" />
   
@@ -64,9 +66,9 @@ const TestScreen = ({navigation}) => {
   const [timeValue, setSliderValue1] = useState(0);
     
   return(
-    <View style={styles.ScreenTestCont}>
-    <Text style={styles.textScreenPref}>Palun vali mitu küsimust testis on*.</Text>
-    <Text style={styles.textScreenPref}>{testValue} küsimust</Text>
+    <View style={styles.preferenceContainer}>
+    <Text style={styles.preferenceText}>Palun vali mitu küsimust testis on*.</Text>
+    <Text style={styles.preferenceText}>{testValue} küsimust</Text>
     
     <Slider
     style={{width: 200, height: 40}}
@@ -80,8 +82,8 @@ const TestScreen = ({navigation}) => {
     thumbTintColor= '#1B98E0'
     />
 
-    <Text style={styles.textScreenPref}>Vali ajalimiit.</Text>
-    <Text style={styles.textScreenPref}>{timeValue} min</Text>
+    <Text style={styles.preferenceText}>Vali ajalimiit.</Text>
+    <Text style={styles.preferenceText}>{timeValue} min</Text>
     
     <Slider
     style={{width: 200, height: 40}}
@@ -130,25 +132,55 @@ const Testid = ({route, navigation}) => {
     }
   };
   
+  const formatRemainingTime = time => {
+  const minutes = Math.floor((time % 3600) / 60);
+  const seconds = time % 60;
+
+  return `${minutes}:${seconds}`;
+};
+
   return( 
-    <View style={styles.textScreenPrefCont}>
+    <View style={styles.questionContainer}>
      
     {showScore ? (
       <View style={styles.container}>
-      <Text style={styles.textScreenPref}>Sa said {score}/{test} õigesti</Text>
+      <Text style={styles.questionPanelText}>Tulemus:</Text>
+      <Text style={styles.preferenceText}>{score}/{test} õigesti</Text>
       <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Testisätted')}><Text style = {styles.text}>Uuesti!</Text></Pressable>
       </View>
     ) : (
       <>
-      <Text style = {styles.textScreenPref}>{currentQuestion+1} / {test}</Text>
-
-      <Text style = {styles.textScreenQuestion}>{questions[[currentQuestion]].questionText}</Text>
+      <Text style = {styles.counterText}>{currentQuestion+1} / {test}</Text>
+      <View style={styles.timercounterContainer}>
+      
+      {time > 0 &&
+        <CountdownCircleTimer
+          isPlaying
+          duration={time*60}
+          size={80}
+          strokeWidth={0}
+          ariaLabel={'Sekundit'}
+          colors={[["#26537D", 0.33], ["#26537D", 0.33], ["#26537D"]]}
+      >
+        {({ remainingTime, animatedColor }) => (
+         
+        
+        <Text style={styles.questionPanelText}>{formatRemainingTime(remainingTime)}</Text>
+          
+        
+      )}
+    </CountdownCircleTimer>
+    }
+    </View>
+      <Text style = {styles.questionPanelText}>{questions[[currentQuestion]].questionText}</Text>
       <Image style={{height:'30%',width:'70%'}} source ={questions[[currentQuestion]].imgPath}/>
+      <ScrollView style={styles.answerContainer}>
       {
           questions[currentQuestion].answerOptions.map((answerOption) => (
-            <Pressable style={ ({ pressed }) => [{backgroundColor: !pressed ? '#1B98E0' : answerOption.isCorrect ? "green" : !answerOption.isCorrect ? "red":  '#13293D'}, styles.questionButton]}
-            onPress={() => handleAnswerButtonClick(answerOption.isCorrect)}><Text style = {styles.text}>{answerOption.answerText}</Text></Pressable>
+            <Pressable style={ ({ pressed }) => [{backgroundColor: !pressed ? '#1B98E0' : answerOption.isCorrect ? "green" : !answerOption.isCorrect ? "red":  '#13293D'}, styles.answerButton]}
+            onPress={() => handleAnswerButtonClick(answerOption.isCorrect)}><Text style = {styles.answerText}>{answerOption.answerText}</Text></Pressable>
       ))}
+      </ScrollView>
     </>
     )}
     </View>
@@ -158,7 +190,7 @@ const Testid = ({route, navigation}) => {
 const Option1 = () => {
   return(
     <View style={styles.container}>
-    <Text style={styles.textScreenPref}>Nõuetele vastav jalgratas.</Text>
+    <Text style={styles.preferenceText}>Nõuetele vastav jalgratas.</Text>
     <Image style={{height:'50%',width:'100%'}} source ={require('./assets/option1.png')}/>
     </View>
   ) 
@@ -166,7 +198,7 @@ const Option1 = () => {
 const Option2 = () => {
   return(
     <View style={styles.container}>
-    <Text style={styles.textScreenPref}>Under construction.</Text>
+    <Text style={styles.preferenceText}>Under construction.</Text>
     </View>
   ) 
 };
@@ -174,30 +206,23 @@ const Option2 = () => {
 const styles = StyleSheet.create({
   container: {
     fontFamily: "Poppins_400Regular",
-    flex: 2,
+    flex: 1,
     flexDirection:'column',
     backgroundColor: "#26537D",
     alignItems: "center",
-    justifyContent: "center",    
+    justifyContent: "center",   
+    
   },
   button: {
     borderRadius: 8,
     margin: 16,
     height: 80,
-    width: '70%',
+    
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5,
   },
-  questionButton: {
-    borderRadius: 8,
-    margin: 16,
-    height: 60,
-    width: '70%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 5,
-  },
+ 
   text:{
     fontFamily: "Poppins_400Regular",
     color: "white",
@@ -207,7 +232,7 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 5,
   },
-  textScreenPref:{
+  preferenceText:{
     fontFamily: "Poppins_400Regular",
     color: "white",
     textAlign: "center",
@@ -216,39 +241,78 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 5,
   },
-  ScreenTestCont:{
+  counterText:{
+    fontFamily: "Poppins_400Regular",
+    color: "white",
+    textAlign: "center",
+    fontSize: 24,
+    width: 300,
+    borderRadius: 5,
+  },
+  questionContainer:{
+    flex: 1,
+    flexDirection:'column',
+    backgroundColor: "#26537D",
+    alignItems: "center",
+    justifyContent: "center", 
+    
+  },
+  timercounterContainer:{
+    marginLeft: 'auto',
+    flex: 1,
+    flexDirection:'row',
+    justifyContent: "flex-start",
+    backgroundColor: "#26537D",
+  },
+  preferenceContainer:{
     fontFamily: "Poppins_400Regular",
     flex: 1,
     flexDirection:'column',
     backgroundColor: "#26537D",
     alignItems: "center",
-    justifyContent: "flex-start",    
+    justifyContent: "center",  
+      
   },
-  textScreenPrefCont:{
-    flex: 1,
+  answerContainer:{
+    left: 0,
     flexDirection:'column',
     backgroundColor: "#26537D",
-    alignItems: "center",
-    justifyContent: "flex-start", 
+    textAlign: 'center',
+    padding: 20,
+    
+    width: '100%',
   },
-
-  textScreenTests:{
+  answerText:{
     fontFamily: "Poppins_400Regular",
     color: "white",
     textAlign: "center",
     fontSize: 20,
-    margin: 15,
-    borderRadius: 5,
-    alignItems: "flex-end",
-  },
-
-  textScreenQuestion:{
-    fontFamily: "Poppins_400Regular",
-    color: "white",
-    textAlign: "center",
-    justifyContent: "flex-start",
-    fontSize: 30,
     margin: 12,
     borderRadius: 5,
   },
+  questionPanelText:{
+    fontFamily: "Poppins_400Regular",
+    color: "white",
+    textAlign: "center",
+    fontSize: 20,
+    margin: 12,
+    borderRadius: 5,
+  },
+  answerButton: {
+    borderRadius: 8,
+    margin: 20,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    elevation: 5,
+  },
+  counterText:{
+    fontFamily: "Poppins_400Regular",
+    color: "white",
+    textAlign:"right",
+    fontSize: 15,
+    borderRadius: 5,
+    textAlign:"center",
+  },
+ 
 });
