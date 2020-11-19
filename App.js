@@ -112,12 +112,11 @@ const TestScreen = ({navigation}) => {
 const Testid = ({route, navigation}) => {
   const { time } = route.params;
   const { test } = route.params;
-  
+  var randomNumber = Math.floor(Math.random()*questions.length)
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
-  var randomNumber = Math.floor(Math.random()*10)+1
-  console.log(randomNumber)
+  
   const handleAnswerButtonClick = (isCorrect) => {
     if (isCorrect){
       setScore(score + 1);
@@ -131,7 +130,6 @@ const Testid = ({route, navigation}) => {
       setShowScore(true);
     }
   };
-  
   const formatRemainingTime = time => {
   const minutes = Math.floor((time % 3600) / 60);
   const seconds = time % 60;
@@ -151,7 +149,7 @@ const Testid = ({route, navigation}) => {
     ) : (
       <>
       <Text style = {styles.counterText}>{currentQuestion+1} / {test}</Text>
-      <View style={styles.timercounterContainer}>
+      <View style={styles.timerContainer}>
       
       {time > 0 &&
         <CountdownCircleTimer
@@ -162,18 +160,16 @@ const Testid = ({route, navigation}) => {
           ariaLabel={'Sekundit'}
           colors={[["#26537D", 0.33], ["#26537D", 0.33], ["#26537D"]]}
       >
-        {({ remainingTime, animatedColor }) => (
-         
-        
+        {({ remainingTime}) => (
         <Text style={styles.questionPanelText}>{formatRemainingTime(remainingTime)}</Text>
-          
-        
       )}
     </CountdownCircleTimer>
     }
     </View>
       <Text style = {styles.questionPanelText}>{questions[[currentQuestion]].questionText}</Text>
-      <Image style={{height:'30%',width:'70%'}} source ={questions[[currentQuestion]].imgPath}/>
+      {questions[[currentQuestion]].imgPath !== undefined &&
+        <Image style={{height:'30%',width:'70%'}} source ={questions[[currentQuestion]].imgPath}/>
+      } 
       <ScrollView style={styles.answerContainer}>
       {
           questions[currentQuestion].answerOptions.map((answerOption) => (
@@ -217,7 +213,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     margin: 16,
     height: 80,
-    
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5,
@@ -257,12 +252,13 @@ const styles = StyleSheet.create({
     justifyContent: "center", 
     
   },
-  timercounterContainer:{
+  timerContainer:{
     marginLeft: 'auto',
     flex: 1,
-    flexDirection:'row',
-    justifyContent: "flex-start",
+    flexDirection:'column',
+    justifyContent: "center",
     backgroundColor: "#26537D",
+    alignItems: "flex-end"
   },
   preferenceContainer:{
     fontFamily: "Poppins_400Regular",
@@ -274,19 +270,16 @@ const styles = StyleSheet.create({
       
   },
   answerContainer:{
-    left: 0,
     flexDirection:'column',
     backgroundColor: "#26537D",
     textAlign: 'center',
     padding: 20,
-    
     width: '100%',
   },
   answerText:{
     fontFamily: "Poppins_400Regular",
     color: "white",
-    textAlign: "center",
-    fontSize: 20,
+    
     margin: 12,
     borderRadius: 5,
   },
@@ -307,12 +300,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   counterText:{
+    marginBottom: 15,
     fontFamily: "Poppins_400Regular",
     color: "white",
     textAlign:"right",
     fontSize: 15,
     borderRadius: 5,
-    textAlign:"center",
+    marginLeft: 'auto',
+    padding: 15,
   },
  
 });
