@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useFonts,Poppins_400Regular} from '@expo-google-fonts/poppins';
 import { AppLoading } from 'expo';
 import {
@@ -9,14 +9,14 @@ import {
   Pressable,
   Image,
   ScrollView,
-  Animated,
+  
 } from "react-native";
 import 'react-native-gesture-handler';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Slider from '@react-native-community/slider';
 import {questions} from './questions.js';
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import CheckBox from '@react-native-community/checkbox';
 
 //Menuu navigatsioon
 export default () => {
@@ -63,7 +63,7 @@ const HomeScreen = ({ navigation }) => {
 //Testi satted
 const TestScreen = ({navigation}) => {
   const [testValue, setSliderValue] = useState(0);
-  const [timeValue, setSliderValue1] = useState(0);
+  
     
   return(
     <View style={styles.preferenceContainer}>
@@ -82,25 +82,11 @@ const TestScreen = ({navigation}) => {
     thumbTintColor= '#1B98E0'
     />
 
-    <Text style={styles.preferenceText}>Vali ajalimiit.</Text>
-    <Text style={styles.preferenceText}>{timeValue} min</Text>
-    
-    <Slider
-    style={{width: 200, height: 40}}
-    minimumValue={1}
-    maximumValue={30}
-    step={1}
-    onValueChange={(id) => setSliderValue1(id)}   
-    timeValue={timeValue}
-    minimumTrackTintColor="#1B98E0"
-    maximumTrackTintColor="#1B98E0"
-    thumbTintColor= '#1B98E0'
-    />  
     <View>
     { testValue > 0 &&
       <Pressable
        style={({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0', },
-       styles.button, <View opacity={1} />]} onPress={() => navigation.navigate('Testid', {time : timeValue, test: testValue})}>  
+       styles.button, <View opacity={1} />]} onPress={() => navigation.navigate('Testid', {test: testValue})}>  
       <Text style = {styles.text}>Jätka</Text>
        </Pressable>
     }  
@@ -110,32 +96,55 @@ const TestScreen = ({navigation}) => {
   ) 
 };
 const Testid = ({route, navigation}) => {
-  const { time } = route.params;
   const { test } = route.params;
-  var randomNumber = Math.floor(Math.random()*questions.length)
+  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
-  const [score, setScore] = useState(0);
-  
+  const [score, setScore] = useState(0); 
+  const [showWrongAnswer, setShowWrongAnswer] = useState(false)
+  const [randomNumberArray, setRandomNumberArray] = useState(0);
+  const [saveQuestionNumber, setSaveQuestionNumber] = useState(0);
+  const randomNumber = ~~(Math.random() * questions.length);
+  const [onContinue, setOnContinue] = useState(false)
+
+
+  const Continue = () =>{
+    setShowWrongAnswer(false);
+    setOnContinue(true)
+    console.log("asdf")
+  }
+
+console.log(saveQuestionNumber)
   const handleAnswerButtonClick = (isCorrect) => {
+    setSaveQuestionNumber(currentQuestion)
     if (isCorrect){
       setScore(score + 1);
-    }
+      setShowWrongAnswer(false);
+    } 
+    if (!isCorrect){
+      
+      setShowWrongAnswer(true);
+      setRandomNumberArray(randomNumber)
+    } 
     const nextQuestion = currentQuestion + 1;
-    setCurrentQuestion(nextQuestion);
+    if(!onContinue){
+      setCurrentQuestion(randomNumber)
+      console.log("asdfqew")
+    } else if (onContinue){
+      setCurrentQuestion(saveQuestionNumber+1)
+      console.log("asdfqew")
+      
+    } 
 
-    if (nextQuestion < test) {
-      setCurrentQuestion(nextQuestion);
-    } else {
-      setShowScore(true);
+    if (nextQuestion < test && isCorrect && !onContinue) {
+        setCurrentQuestion(nextQuestion)
+        setShowWrongAnswer(false);
+    } else if (!isCorrect){
+      setShowWrongAnswer(true);
+    } else{
+      setShowScore(true)
     }
   };
-  const formatRemainingTime = time => {
-  const minutes = Math.floor((time % 3600) / 60);
-  const seconds = time % 60;
-
-  return `${minutes}:${seconds}`;
-};
 
   return( 
     <View style={styles.questionContainer}>
@@ -146,44 +155,52 @@ const Testid = ({route, navigation}) => {
       <Text style={styles.preferenceText}>{score}/{test} õigesti</Text>
       <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={() => navigation.navigate('Testisätted')}><Text style = {styles.text}>Uuesti!</Text></Pressable>
       </View>
-    ) : (
-      <>
-      <Text style = {styles.counterText}>{currentQuestion+1} / {test}</Text>
-      <View style={styles.timerContainer}>
+    ) : showWrongAnswer ? 
+         <View>
+        <Text style = {styles.questionPanelText}>Vale vastus!</Text>
       
-      {time > 0 &&
-        <CountdownCircleTimer
-          isPlaying
-          duration={time*60}
-          size={80}
-          strokeWidth={0}
-          ariaLabel={'Sekundit'}
-          colors={[["#26537D", 0.33], ["#26537D", 0.33], ["#26537D"]]}
-      >
-        {({ remainingTime}) => (
-        <Text style={styles.questionPanelText}>{formatRemainingTime(remainingTime)}</Text>
-      )}
-    </CountdownCircleTimer>
-    }
-    </View>
-      <Text style = {styles.questionPanelText}>{questions[[currentQuestion]].questionText}</Text>
-      {questions[[currentQuestion]].imgPath !== undefined &&
-        <Image style={{height:'30%',width:'70%'}} source ={questions[[currentQuestion]].imgPath}/>
-      } 
       <ScrollView style={styles.answerContainer}>
       {
-          questions[currentQuestion].answerOptions.map((answerOption) => (
-            <Pressable style={ ({ pressed }) => [{backgroundColor: !pressed ? '#1B98E0' : answerOption.isCorrect ? "green" : !answerOption.isCorrect ? "red":  '#13293D'}, styles.answerButton]}
-            onPress={() => handleAnswerButtonClick(answerOption.isCorrect)}><Text style = {styles.answerText}>{answerOption.answerText}</Text></Pressable>
+          questions[randomNumberArray].answerOptions.map((answerOption, i) => (
+            <Pressable key={i}
+              style={ ({ pressed }) => [{backgroundColor: pressed ? '#1B98E0' : answerOption.isCorrect ? "green" : !answerOption.isCorrect ? "red":  '#13293D'}, styles.answerButton]}
+              ><Text style = {styles.answerText}>{answerOption.answerText}</Text>
+              </Pressable>
+              
+      ))}
+      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={Continue}><Text style = {styles.text}>Jätka!</Text></Pressable>
+      </ScrollView>
+        </View>
+    :(
+      <>
+      <Text style = {styles.counterText}>{currentQuestion+1} / {test}</Text>
+      
+      <Text style = {styles.questionPanelText}>{questions[[randomNumber]].questionText}</Text>
+      
+      
+      {questions[[randomNumber]].imgPath !== undefined &&
+        <Image style={{height:'30%',width:'70%'}} source ={questions[[randomNumber]].imgPath}/>  
+      }
+      
+      <ScrollView style={styles.answerContainer}>
+         
+      {
+          questions[randomNumber].answerOptions.map((answerOption, i) => (
+            <Pressable key={i}
+              style={ ({ pressed }) => [{backgroundColor: !pressed ? '#1B98E0' : answerOption.isCorrect ? "green" : !answerOption.isCorrect ? "red":  '#13293D'}, styles.answerButton]}
+              onPress={() =>setTimeout(function(){ handleAnswerButtonClick(answerOption.isCorrect); }, 500) }><Text style = {styles.answerText}>{answerOption.answerText}</Text>
+              </Pressable>
+              
       ))}
       </ScrollView>
+      
     </>
     )}
     </View>
   ) 
 };
 
-const Option1 = () => {
+const Option2 = () => {
   return(
     <View style={styles.container}>
     <Text style={styles.preferenceText}>Nõuetele vastav jalgratas.</Text>
@@ -191,7 +208,7 @@ const Option1 = () => {
     </View>
   ) 
 };
-const Option2 = () => {
+const Option1 = () => {
   return(
     <View style={styles.container}>
     <Text style={styles.preferenceText}>Under construction.</Text>
@@ -252,14 +269,6 @@ const styles = StyleSheet.create({
     justifyContent: "center", 
     
   },
-  timerContainer:{
-    marginLeft: 'auto',
-    flex: 1,
-    flexDirection:'column',
-    justifyContent: "center",
-    backgroundColor: "#26537D",
-    alignItems: "flex-end"
-  },
   preferenceContainer:{
     fontFamily: "Poppins_400Regular",
     flex: 1,
@@ -279,35 +288,32 @@ const styles = StyleSheet.create({
   answerText:{
     fontFamily: "Poppins_400Regular",
     color: "white",
-    
     margin: 12,
     borderRadius: 5,
   },
   questionPanelText:{
     fontFamily: "Poppins_400Regular",
     color: "white",
-    textAlign: "center",
+    
     fontSize: 20,
     margin: 12,
     borderRadius: 5,
   },
+ 
   answerButton: {
+    
     borderRadius: 8,
-    margin: 20,
-    height: 60,
+    margin: 10,
     justifyContent: 'center',
     alignItems: 'flex-start',
     elevation: 5,
   },
   counterText:{
-    marginBottom: 15,
     fontFamily: "Poppins_400Regular",
     color: "white",
-    textAlign:"right",
     fontSize: 15,
     borderRadius: 5,
     marginLeft: 'auto',
-    padding: 15,
   },
  
 });
