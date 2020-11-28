@@ -103,20 +103,22 @@ const Testid = ({route, navigation}) => {
   const [score, setScore] = useState(0); 
   const [showWrongAnswer, setShowWrongAnswer] = useState(false)
   const [randomNumberArray, setRandomNumberArray] = useState(0);
-  const [saveQuestionNumber, setSaveQuestionNumber] = useState(0);
   const randomNumber = ~~(Math.random() * questions.length);
-  const [onContinue, setOnContinue] = useState(false)
-
-
-  const Continue = () =>{
+  const [onContinue, setOnContinue] = useState(false);
+  const nextQuestion = currentQuestion + 1;
+  
+  const handleWrongAnswer = () =>{
     setShowWrongAnswer(false);
-    setOnContinue(true)
-    console.log("asdf")
+    setOnContinue(true);
+    if (nextQuestion < test) {
+      setCurrentQuestion(nextQuestion)
+      setShowWrongAnswer(false);
+    } else {
+      setShowScore(true)
+    }
   }
 
-console.log(saveQuestionNumber)
   const handleAnswerButtonClick = (isCorrect) => {
-    setSaveQuestionNumber(currentQuestion)
     if (isCorrect){
       setScore(score + 1);
       setShowWrongAnswer(false);
@@ -126,17 +128,9 @@ console.log(saveQuestionNumber)
       setShowWrongAnswer(true);
       setRandomNumberArray(randomNumber)
     } 
-    const nextQuestion = currentQuestion + 1;
-    if(!onContinue){
-      setCurrentQuestion(randomNumber)
-      console.log("asdfqew")
-    } else if (onContinue){
-      setCurrentQuestion(saveQuestionNumber+1)
-      console.log("asdfqew")
-      
-    } 
-
-    if (nextQuestion < test && isCorrect && !onContinue) {
+  
+    
+    if (nextQuestion < test && isCorrect) {
         setCurrentQuestion(nextQuestion)
         setShowWrongAnswer(false);
     } else if (!isCorrect){
@@ -157,7 +151,7 @@ console.log(saveQuestionNumber)
       </View>
     ) : showWrongAnswer ? 
          <View>
-        <Text style = {styles.questionPanelText}>Vale vastus!</Text>
+        <Text style = {styles.wrongAnswerText}>Vale vastus!</Text>
       
       <ScrollView style={styles.answerContainer}>
       {
@@ -168,7 +162,7 @@ console.log(saveQuestionNumber)
               </Pressable>
               
       ))}
-      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={Continue}><Text style = {styles.text}>Jätka!</Text></Pressable>
+      <Pressable style={ ({ pressed }) => [{backgroundColor: pressed ? '#13293D' : '#1B98E0'}, styles.button]} onPress={handleWrongAnswer}><Text style = {styles.text}>Jätka!</Text></Pressable>
       </ScrollView>
         </View>
     :(
@@ -253,6 +247,13 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 5,
   },
+  wrongAnswerText:{
+    fontFamily: "Poppins_400Regular",
+    color: "white",
+    textAlign: "center",
+    fontSize: 24,
+    margin: 15,
+  },
   counterText:{
     fontFamily: "Poppins_400Regular",
     color: "white",
@@ -294,7 +295,6 @@ const styles = StyleSheet.create({
   questionPanelText:{
     fontFamily: "Poppins_400Regular",
     color: "white",
-    
     fontSize: 20,
     margin: 12,
     borderRadius: 5,
