@@ -11,10 +11,8 @@ import {
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Slider from '@react-native-community/slider';
-import { questions } from './questions.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './Styles/styles.js';
+import styles from './Screens/styles.js';
 import HomeScreen from './Screens/homeScreen.js';
 import TestScreen from './Screens/testMenu.js';
 import Tests from './Screens/Tests.js';

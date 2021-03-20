@@ -4,7 +4,7 @@ import {
     View,
     Pressable,
 } from 'react-native';
-import styles from '/home/georg/Documents/reactnative/react-app/Styles/styles.js';
+import styles from './styles.js';
 
 export default ({ navigation }) => {
     return (

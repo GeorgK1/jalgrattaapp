@@ -7,8 +7,8 @@ import {
     ScrollView,
 } from 'react-native';
 import 'react-native-gesture-handler';
-import styles from '/home/georg/Documents/reactnative/react-app/Styles/styles.js';
-import { questions } from '../questions.js';
+import styles from './styles.js';
+import { questions } from '../questions/questions.js';
 
 export default ({ route, navigation }) => {
     const { test } = route.params;

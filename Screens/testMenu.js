@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
     Text,
     View,
     Pressable,
 } from 'react-native';
-import styles from '/home/georg/Documents/reactnative/react-app/Styles/styles.js';
+import styles from './styles.js';
 import Slider from '@react-native-community/slider';
 
 export default ({ navigation }) => {
@@ -48,14 +48,6 @@ export default ({ navigation }) => {
                     </Pressable>
                 )}
             </View>
-            <Text
-                style={{
-                    fontSize: 18,
-                    color: 'white',
-                    fontFamily: 'Poppins_400Regular',
-                }}>
-                * märgitud väljad on kohustuslikud.
-            </Text>
         </View>
     );
 };
