@@ -31,10 +31,10 @@ export default ({ route, navigation }) => {
     const [showScore, setShowScore] = useState(false);
     const [score, setScore] = useState(0);
     const [showWrongAnswer, setShowWrongAnswer] = useState(false);
-    const [randomNumberArray, setRandomNumberArray] = useState(0);
-
+    const [randomQuestionArray, setRandomQuestionArray] = useState(0);
+    const [randomModuleArray, setRandomModuleArray] = useState(0);
     const randomModule = ~~(Math.random() * moduleList.length);
-    const randomQuestion = ~~(Math.random() * moduleList;
+    const randomQuestion = ~~(Math.random() * 10);
 
     const [onContinue, setOnContinue] = useState(false);
     const nextQuestion = currentQuestion + 1;
@@ -50,7 +50,6 @@ export default ({ route, navigation }) => {
             setShowScore(true);
         }
     };
-    console.log(moduleList[randomModule][0]);
     const handleAnswerButtonClick = (isCorrect) => {
         if (isCorrect) {
             setScore(score + 1);
@@ -58,7 +57,8 @@ export default ({ route, navigation }) => {
         }
         if (!isCorrect) {
             setShowWrongAnswer(true);
-            setRandomNumberArray(randomNumber);
+            setRandomModuleArray(randomModule);
+            setRandomQuestionArray(randomQuestion);
         }
 
         if (nextQuestion < test && isCorrect) {
@@ -104,7 +104,7 @@ export default ({ route, navigation }) => {
                     <Text style={styles.wrongAnswerText}>Vale vastus!</Text>
 
                     <ScrollView style={styles.answerContainer}>
-                        {moduleList[randomModule][randomQuestion].answerOptions.map(
+                        {moduleList[randomModuleArray][randomQuestionArray].answerOptions.map(
                             (answerOption, i) => (
                                 <Pressable
                                     key={i}
@@ -153,7 +153,7 @@ export default ({ route, navigation }) => {
                     {moduleList[randomModule][randomQuestion].imgPath !== undefined && (
                         <Image
                             style={{ height: '30%', width: '70%' }}
-                            source={`moduleList[randomModule][randomQuestion]`[1].imgPath}
+                            source={moduleList[randomModule][randomQuestion].imgPath}
                         />
                     )}
 
