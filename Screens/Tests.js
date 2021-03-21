@@ -31,12 +31,10 @@ export default ({ route, navigation }) => {
     const [showScore, setShowScore] = useState(false);
     const [score, setScore] = useState(0);
     const [showWrongAnswer, setShowWrongAnswer] = useState(false);
-    const [randomModuleArray, setRandomModuleArray] = useState(0);
-    //const [randomQuestionArray, setRandomQuestionArray] = useState(0);
-    //const randomNumber = ~~(Math.random() * questions.length);
+    const [randomNumberArray, setRandomNumberArray] = useState(0);
 
     const randomModule = ~~(Math.random() * moduleList.length);
-    const randomQuestion = ~~(Math.random() * 10);
+    const randomQuestion = ~~(Math.random() * moduleList;
 
     const [onContinue, setOnContinue] = useState(false);
     const nextQuestion = currentQuestion + 1;

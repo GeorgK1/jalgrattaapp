@@ -1,6 +1,17 @@
 export const module_3 = [
     //TEST 3
     {
+        questionText: 'Milline liiklusmärk ei keela jalgrattaga sõitmist?',
+        imgPath: require('../assets/test_module3_1.png'),
+        answerOptions: [
+            { answerText: '1.', isCorrect: false },
+            { answerText: '2.', isCorrect: true },
+            { answerText: '3.', isCorrect: false },
+            { answerText: '4.', isCorrect: false },
+            { answerText: '5.', isCorrect: false },
+        ],
+    },
+    {
         questionText: 'Millistes suundades tohib jalgrattur sõitu jätkata?',
         imgPath: require('../assets/test15.png'),
         answerOptions: [
@@ -11,6 +22,24 @@ export const module_3 = [
         ],
     },
     {
+        questionText: 'Kes peab andma teed ja miks?',
+        imgPath: require('../assets/test_module3_2.png'),
+        answerOptions: [
+            { answerText: 'Autojuht, sest auto ületab jalgrattateed.', isCorrect: false },
+            { answerText: 'Autojuht, sest autol on paremalt lähenemas jalgratas.', isCorrect: false },
+            { answerText: 'Jalgrattur, sest ta sõidab jalgrattateel, mis ristub ristmikevahelise teega.', isCorrect: true },
+        ],
+    },
+    {
+        questionText: 'Milline on ristmiku ületamise õige järjekord?',
+        imgPath: require('../assets/test_module3_3.png'),
+        answerOptions: [
+            { answerText: 'Jalgratas B, jalgratas A, jalgratas C.', isCorrect: true },
+            { answerText: 'Jalgratas C, jalgratas A, jalgratas B.', isCorrect: false },
+            { answerText: 'Jalgratas C, jalgratas B, jalgratas A.', isCorrect: false },
+        ],
+    },
+    {
         questionText: 'Kes ületab ristmiku esimesena?',
         imgPath: require('../assets/test16.png'),
         answerOptions: [
@@ -18,6 +47,7 @@ export const module_3 = [
             { answerText: 'Jalgrattur B.', isCorrect: false },
         ],
     },
+    
     {
         questionText: 'Millistes suundades tohib jalgrattur sõitu jätkata?',
         imgPath: require('../assets/test17.png'),
