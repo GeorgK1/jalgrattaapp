@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
-import AppLoading from 'expo-app-loading'
+import AppLoading from 'expo-app-loading';
 import { Text, View, Pressable, Image, ScrollView } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
@@ -35,30 +35,28 @@ export default () => {
 };
 
 const Option1 = ({ route }) => {
-    // const { result } = route.params;
-    // const storeData = async (value) => {
-    //     try {
-    //       const jsonValue = JSON.stringify(result)
-    //       await AsyncStorage.setItem('@storage_Key', jsonValue)
-
-    //     } catch (e) {
-    //       // saving error
-    //     }
-    //   }
-
-    // const getData = async () => {
-    //     try {
-    //       const jsonValue = await AsyncStorage.getItem('@storage_Key')
-    //       return jsonValue != null ? JSON.parse(jsonValue) : null;
-    //     } catch(e) {
-    //       // error reading value
-    //     }
-    //   }
-
+    const STORAGE_KEY = '@results';
+    const [results, setResults] = useState(0);
+    const { precentage } = route.params;
+    const { score } = route.params;
+    const { testAmount } = route.params;
+    
+    const readData = async () => {
+        try {
+          const results = await AsyncStorage.getItem(STORAGE_KEY)
+      
+          if (results !== null) {
+            return results
+          }
+        } catch (e) {
+          alert('Failed to fetch the data from storage')
+        }
+      }
     return (
-        <View style={styles.container}>
-            <Text style={styles.resultText}>ASDF</Text>
-        </View>
+        <ScrollView style={styles.answerContainer}>
+            <Text style={styles.resultText}>Tulemused</Text>
+            
+        </ScrollView>
     );
 };
 

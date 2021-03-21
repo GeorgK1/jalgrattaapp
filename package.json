@@ -17,6 +17,7 @@
     "@react-navigation/stack": "^5.12.6",
     "expo": "^40.0.1",
     "expo-app-loading": "^1.0.1",
+    "expo-optimize": "^0.1.81",
     "expo-status-bar": "~1.0.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",

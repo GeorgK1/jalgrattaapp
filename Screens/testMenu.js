@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Text,
-    View,
-    Pressable,
-} from 'react-native';
+import { Text, View, Pressable } from 'react-native';
 import styles from './styles.js';
 import Slider from '@react-native-community/slider';
 
