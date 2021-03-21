@@ -1,13 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import { AppLoading } from 'expo';
-import {
-    Text,
-    View,
-    Pressable,
-    Image,
-    ScrollView,
-} from 'react-native';
+import { Text, View, Pressable, Image, ScrollView } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,7 +10,6 @@ import styles from './Screens/styles.js';
 import HomeScreen from './Screens/homeScreen.js';
 import TestScreen from './Screens/testMenu.js';
 import Tests from './Screens/Tests.js';
-
 
 //navigatsioon
 export default () => {
@@ -41,16 +34,13 @@ export default () => {
     }
 };
 
-
-
-const Option1 = ({ route}) => {
-    
+const Option1 = ({ route }) => {
     // const { result } = route.params;
     // const storeData = async (value) => {
     //     try {
     //       const jsonValue = JSON.stringify(result)
     //       await AsyncStorage.setItem('@storage_Key', jsonValue)
-         
+
     //     } catch (e) {
     //       // saving error
     //     }
@@ -64,12 +54,10 @@ const Option1 = ({ route}) => {
     //       // error reading value
     //     }
     //   }
-     
+
     return (
         <View style={styles.container}>
-         
             <Text style={styles.resultText}>ASDF</Text>
-        
         </View>
     );
 };
@@ -80,8 +68,6 @@ const Option2 = () => {
             <Text style={styles.infoText}>
                 Tehtud 11.klassi praktilise töö raames Georg Kiviväli poolt.
             </Text>
-            
         </View>
     );
 };
-

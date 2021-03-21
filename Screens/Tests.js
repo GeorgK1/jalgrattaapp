@@ -1,11 +1,5 @@
-import React, { useState} from 'react';
-import {
-    Text,
-    View,
-    Pressable,
-    Image,
-    ScrollView,
-} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, Pressable, Image, ScrollView } from 'react-native';
 import 'react-native-gesture-handler';
 import styles from './styles.js';
 import { questions } from '../questions/questions.js';
@@ -17,8 +11,13 @@ export default ({ route, navigation }) => {
     const [showScore, setShowScore] = useState(false);
     const [score, setScore] = useState(0);
     const [showWrongAnswer, setShowWrongAnswer] = useState(false);
-    const [randomNumberArray, setRandomNumberArray] = useState(0);
-    const randomNumber = ~~(Math.random() * questions.length);
+    const [randomModuleArray, setRandomModuleArray] = useState(0);
+    //const [randomQuestionArray, setRandomQuestionArray] = useState(0);
+    //const randomNumber = ~~(Math.random() * questions.length);
+
+    const randomModule = ~~(Math.random() * questions.length);
+    const randomQuestion = ~~(Math.random() * questions.length);
+
     const [onContinue, setOnContinue] = useState(false);
     const nextQuestion = currentQuestion + 1;
     const precentage = (score / test) * 100;
@@ -53,7 +52,7 @@ export default ({ route, navigation }) => {
             setShowScore(true);
         }
     };
-    
+
     return (
         <View style={styles.questionContainer}>
             {showScore ? (
@@ -74,7 +73,11 @@ export default ({ route, navigation }) => {
                             },
                             styles.button,
                         ]}
-                        onPress={() => navigation.navigate('Tulemused', { result: precentage })}>
+                        onPress={() =>
+                            navigation.navigate('Tulemused', {
+                                result: precentage,
+                            })
+                        }>
                         <Text style={styles.text}>Uuesti!</Text>
                     </Pressable>
                 </View>
@@ -83,7 +86,7 @@ export default ({ route, navigation }) => {
                     <Text style={styles.wrongAnswerText}>Vale vastus!</Text>
 
                     <ScrollView style={styles.answerContainer}>
-                        {questions[randomNumberArray].answerOptions.map(
+                        {questions[randomModuleArray].answerOptions.map(
                             (answerOption, i) => (
                                 <Pressable
                                     key={i}

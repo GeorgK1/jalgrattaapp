@@ -1,5 +1,5 @@
 //stiil
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         fontFamily: 'Poppins_400Regular',
@@ -109,13 +109,13 @@ export default StyleSheet.create({
         borderRadius: 5,
         marginLeft: 'auto',
     },
-    resultText:{
+    resultText: {
         fontFamily: 'Poppins_400Regular',
-        
+
         color: 'white',
         fontSize: 35,
         borderRadius: 5,
-        justifyContent:'flex-start',
-        marginBottom: 'auto'
-    }
+        justifyContent: 'flex-start',
+        marginBottom: 'auto',
+    },
 });

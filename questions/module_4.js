@@ -1,103 +1,152 @@
 export const module_4 = [
+    {
+        questionText: 'Millistes suundades võib jalgrattur suunda jätkata?',
+        imgPath: require('./assets/test19.png'),
+        answerOptions: [
+            { answerText: 'Kõikides suundades.', isCorrect: false },
+            { answerText: 'Ainult vasakule.', isCorrect: true },
+            { answerText: 'Otse ja vasakule.', isCorrect: false },
+            { answerText: 'Vasakule ja tagasi.', isCorrect: false },
+        ],
+    },
+    {
+        questionText: 'Kes peab andma teed ja miks?',
+        imgPath: require('./assets/test20.png'),
+        answerOptions: [
+            {
+                answerText:
+                    'Autojuht peab andma teed jalgratturile, kuna auto sõidab parklast välja.',
+                isCorrect: true,
+            },
+            {
+                answerText:
+                    'Jalgrattur peab andma teed autole, kuna see tuleb paremalt.',
+                isCorrect: false,
+            },
+            {
+                answerText:
+                    'Jalgrattur peab andma teed autole, kuna auto on mootorsõiduk.',
+                isCorrect: false,
+            },
+        ],
+    },
+    {
+        questionText: 'Milline on ristmiku ületamise õige järjekord?',
+        imgPath: require('./assets/test21.png'),
+        answerOptions: [
+            {
+                answerText: 'Jalgratas B, jalgratas A, jalgratas C.',
+                isCorrect: false,
+            },
+            {
+                answerText: 'Jalgratas A, jalgratas C, jalgratas B.',
+                isCorrect: true,
+            },
+            {
+                answerText: 'Jalgratas C, jalgratas A, jalgratas B.',
+                isCorrect: false,
+            },
+        ],
+    },
+    {
+        questionText: 'Kes ületab ristmiku esimesena?',
+        imgPath: require('./assets/test22.png'),
+        answerOptions: [
+            { answerText: 'Jalgrattur A.', isCorrect: true },
+            { answerText: 'Jalgrattur B.', isCorrect: false },
+        ],
+    },
+    //test 4 kys 6
+    {
+        questionText: 'Suunamärguande näitamise lõpetab jalgrattur ...',
+        answerOptions: [
+            {
+                answerText: 'siis, kui tal käsi ära väsib.',
+                isCorrect: false,
+            },
+            {
+                answerText: 'siis, kui pööre on lõpetatud.',
+                isCorrect: false,
+            },
+            {
+                answerText:
+                    'vahetult enne pööramist. Pöörde ajal peavad mõlemad käed hoidma kinni juhtrauast.',
+                isCorrect: true,
+            },
+        ],
+    },
 
-    //TEST 3
-	{
-		questionText: 'Millistes suundades tohib jalgrattur sõitu jätkata?',
-		imgPath: require('./assets/test15.png'),
-		answerOptions: [
-			{ answerText: 'Ainult paremale ja vasakule.', isCorrect: false },
-			{ answerText: 'Paremale, otse ja vasakule.', isCorrect: true },
-			{ answerText: 'Ainult paremale ja otse.', isCorrect: false },
-			{ answerText: 'Kõikides suundades.', isCorrect: false },
-		],
-	},
-	{
-		questionText: 'Kes ületab ristmiku esimesena?',
-		imgPath: require('./assets/test16.png'),
-		answerOptions: [
-			{ answerText: 'Jalgrattur A.', isCorrect: true },
-			{ answerText: 'Jalgrattur B.', isCorrect: false },
-		],
-	},
-	{
-		questionText: 'Millistes suundades tohib jalgrattur sõitu jätkata?',
-		imgPath: require('./assets/test17.png'),
-		answerOptions: [
-			{ answerText: 'Ainult paremale.', isCorrect: false },
-			{ answerText: 'Ainult otse ja paremale.', isCorrect: false },
-			{ answerText: 'Otse, paremale ja vasakule.', isCorrect: true },
-			{ answerText: 'Sõita ei tohi.', isCorrect: false },
-		],
-	},
-	{
-		questionText: 'Ohutuks sõitmiseks jalgrattaga...',
-		answerOptions: [
-			{
-				answerText:
-					'piisab, kui ma igas olukorras tegutsen täpselt liiklusreeglite järgi.',
-				isCorrect: false,
-			},
-			{
-				answerText:
-					'pean tundma liiklusreegleid ja nende järgi käituma. Alati pean olema valmis, et keegi võib liikluses eksida ja tekkida ohtlik olukord.',
-				isCorrect: true,
-			},
-		],
-	},
-	{
-		questionText: 'Sõiduteel tohib iseseisvalt jalgratast juhtida...',
-		answerOptions: [
-			{
-				answerText: 'Alates 8-aastaselt, omades jalgratturi juhiluba.',
-				isCorrect: false,
-			},
-			{
-				answerText:
-					'Alates 12-aastaselt, jalgratturi juhiluba ei pea olema.',
-				isCorrect: false,
-			},
-			{
-				answerText: 'Alates 10-aastaselt, omades jalgratturi juhiluba.',
-				isCorrect: true,
-			},
-		],
-	},
-	{
-		questionText:
-			'Missugused helkurid peavad jalgrattal olema ees ja taga?',
-		answerOptions: [
-			{
-				answerText: 'Jalgrattal ei pea ees ja taga helkureid olema.',
-				isCorrect: false,
-			},
-			{
-				answerText:
-					'Jalgrattal peab olema ees valge ja taga punane helkur.',
-				isCorrect: true,
-			},
-			{
-				answerText:
-					'Jalgrattal peab olema ees valge ja taga punane helkur vaid pimedas sõites.',
-				isCorrect: false,
-			},
-		],
-	},
-	{
-		questionText: 'Õnnetuskohale sattudes, pöörad tähelepanu kõigepealt:',
-		answerOptions: [
-			{
-				answerText: 'kannatanutele, kes jooksevad ringi ja karjuvad.',
-				isCorrect: false,
-			},
-			{
-				answerText: 'kannatanutele, kes on autos ja nutavad.',
-				isCorrect: false,
-			},
-			{
-				answerText: 'kannatanutele, kes lamavad teadvuseta.',
-				isCorrect: true,
-			},
-		],
-	},
-	
-]
+    {
+        questionText:
+            'Sõidan peateel ja kõrvalteelt lähenevad sõidukijuhid peavad andma mulle teed, kuid ohutuse huvides ...',
+        answerOptions: [
+            {
+                answerText:
+                    'pean ma olema veendunud, et nad kavatsevad mulle teed anda.',
+                isCorrect: true,
+            },
+            {
+                answerText:
+                    'ei ole tähtis, kuidas käituvad ristmikule lähenevate sõidukite juhid, sest minul on õigus ületada ristmik esimesena.',
+                isCorrect: false,
+            },
+            {
+                answerText: 'helistan jalgrattakella ja viibutan kätt.',
+                isCorrect: false,
+            },
+        ],
+    },
+
+    {
+        questionText: 'Kuni 16.a jalgrattur ei tohi ...',
+        answerOptions: [
+            {
+                answerText: 'sõita koduõues ümber maja.',
+                isCorrect: false,
+            },
+            {
+                answerText: 'sõita jalgratta ja jalgteel.',
+                isCorrect: false,
+            },
+            {
+                answerText: 'sõita üksi ja ilma juhiloata sõiduteel.',
+                isCorrect: true,
+            },
+        ],
+    },
+
+    {
+        questionText:
+            'Millised helkurid peavad olema jalgratta külgedel (kodarate küljes)',
+        answerOptions: [
+            {
+                answerText:
+                    'Vähemalt ühe ratta kummalgi küljel peab olema kollane või valge helkur.',
+                isCorrect: true,
+            },
+            {
+                answerText: 'Helkureid ei pea olema.',
+                isCorrect: false,
+            },
+        ],
+    },
+
+    {
+        questionText: 'Hädaabinumbrile 112 tuleb helistada kui:',
+        answerOptions: [
+            {
+                answerText: 'on igav ja tahad kellegagi rääkida.',
+                isCorrect: false,
+            },
+            {
+                answerText: 'jalgrattarehv läks katki.',
+                isCorrect: false,
+            },
+            {
+                answerText:
+                    'on juhtunud õnnetus, kellegi elu ja tervis on ohus.',
+                isCorrect: true,
+            },
+        ],
+    },
+];

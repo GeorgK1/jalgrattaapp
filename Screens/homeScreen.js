@@ -1,9 +1,5 @@
-import React from "react";
-import {
-    Text,
-    View,
-    Pressable,
-} from 'react-native';
+import React from 'react';
+import { Text, View, Pressable } from 'react-native';
 import styles from './styles.js';
 
 export default ({ navigation }) => {
@@ -37,7 +33,6 @@ export default ({ navigation }) => {
                 onPress={() => navigation.navigate('Info')}>
                 <Text style={styles.text}>Info</Text>
             </Pressable>
-            
         </View>
     );
 };
