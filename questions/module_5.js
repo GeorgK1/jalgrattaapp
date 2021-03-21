@@ -3,7 +3,7 @@ export const module_5 = [
     {
         questionText:
             'Milline liiklusmärk kohustab jalgratturil ristmikul pöörama ainult paremale?',
-        imgPath: require('./assets/test23.png'),
+        imgPath: require('../assets/test23.png'),
         answerOptions: [
             {
                 answerText: '1',
@@ -29,7 +29,7 @@ export const module_5 = [
     },
     {
         questionText: 'Millistes suundades ei tohi jalgrattur sõitu jätkata?',
-        imgPath: require('./assets/test24.png'),
+        imgPath: require('../assets/test24.png'),
         answerOptions: [
             { answerText: 'Vasakule ja otse.', isCorrect: false },
             { answerText: 'Ainult tagasi.', isCorrect: true },
@@ -39,7 +39,7 @@ export const module_5 = [
     },
     {
         questionText: 'Milline on ristmiku ületamise õige järjekord?',
-        imgPath: require('./assets/test25.png'),
+        imgPath: require('../assets/test25.png'),
         answerOptions: [
             { answerText: 'Jalgratas B, Jalgratas A.', isCorrect: false },
             { answerText: 'Jalgratas A, Jalgratas B.', isCorrect: false },
@@ -52,7 +52,7 @@ export const module_5 = [
     },
     {
         questionText: 'Milline on ristmiku ületamise õige järjekord?',
-        imgPath: require('./assets/test26.png'),
+        imgPath: require('../assets/test26.png'),
         answerOptions: [
             {
                 answerText: 'Sõiduauto, sest see on kiirem sõiduk.',
@@ -70,7 +70,7 @@ export const module_5 = [
     },
     {
         questionText: 'Kes peab andma teed?',
-        imgPath: require('./assets/test27.png'),
+        imgPath: require('../assets/test27.png'),
         answerOptions: [
             {
                 answerText: 'Jalgrattur A.',

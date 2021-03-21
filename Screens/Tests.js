@@ -2,11 +2,31 @@ import React, { useState } from 'react';
 import { Text, View, Pressable, Image, ScrollView } from 'react-native';
 import 'react-native-gesture-handler';
 import styles from './styles.js';
-import { questions } from '../questions/questions.js';
+import { module_1 } from '../questions/module_1.js';
+import { module_2 } from '../questions/module_2.js';
+import { module_3 } from '../questions/module_3.js';
+import { module_4 } from '../questions/module_4.js';
+import { module_5 } from '../questions/module_5.js';
+import { module_6 } from '../questions/module_6.js';
+import { module_7 } from '../questions/module_7.js';
+import { module_8 } from '../questions/module_8.js';
+import { module_9 } from '../questions/module_9.js';
+import { module_10 } from '../questions/module_10.js';
 
 export default ({ route, navigation }) => {
     const { test } = route.params;
-
+    const moduleList = [
+        module_1,
+        module_2,
+        module_3,
+        module_4,
+        module_5,
+        module_6,
+        module_7,
+        module_8,
+        module_9,
+        module_10,
+    ];
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [showScore, setShowScore] = useState(false);
     const [score, setScore] = useState(0);
@@ -15,8 +35,8 @@ export default ({ route, navigation }) => {
     //const [randomQuestionArray, setRandomQuestionArray] = useState(0);
     //const randomNumber = ~~(Math.random() * questions.length);
 
-    const randomModule = ~~(Math.random() * questions.length);
-    const randomQuestion = ~~(Math.random() * questions.length);
+    const randomModule = ~~(Math.random() * moduleList.length);
+    const randomQuestion = ~~(Math.random() * 10);
 
     const [onContinue, setOnContinue] = useState(false);
     const nextQuestion = currentQuestion + 1;
@@ -32,7 +52,7 @@ export default ({ route, navigation }) => {
             setShowScore(true);
         }
     };
-
+    console.log(moduleList[randomModule][0]);
     const handleAnswerButtonClick = (isCorrect) => {
         if (isCorrect) {
             setScore(score + 1);
@@ -86,7 +106,7 @@ export default ({ route, navigation }) => {
                     <Text style={styles.wrongAnswerText}>Vale vastus!</Text>
 
                     <ScrollView style={styles.answerContainer}>
-                        {questions[randomModuleArray].answerOptions.map(
+                        {moduleList[randomModule][randomQuestion].answerOptions.map(
                             (answerOption, i) => (
                                 <Pressable
                                     key={i}
@@ -129,18 +149,18 @@ export default ({ route, navigation }) => {
                     </Text>
 
                     <Text style={styles.questionPanelText}>
-                        {questions[[randomNumber]].questionText}
+                        {moduleList[randomModule][randomQuestion].questionText}
                     </Text>
 
-                    {questions[[randomNumber]].imgPath !== undefined && (
+                    {moduleList[randomModule][randomQuestion].imgPath !== undefined && (
                         <Image
                             style={{ height: '30%', width: '70%' }}
-                            source={questions[[randomNumber]].imgPath}
+                            source={`moduleList[randomModule][randomQuestion]`[1].imgPath}
                         />
                     )}
 
                     <ScrollView style={styles.answerContainer}>
-                        {questions[randomNumber].answerOptions.map(
+                        {moduleList[randomModule][randomQuestion].answerOptions.map(
                             (answerOption, i) => (
                                 <Pressable
                                     key={i}

@@ -2,7 +2,7 @@ export const module_1 = [
     //TEST 1
     {
         questionText: 'Kes ületab esimesena ristmikul teed?',
-        imgPath: require('./assets/test.png'),
+        imgPath: require('../assets/test.png'),
 
         answerOptions: [
             { answerText: 'Kollane auto.', isCorrect: false },
@@ -12,7 +12,7 @@ export const module_1 = [
     },
     {
         questionText: 'Kellele annad teed?',
-        imgPath: require('./assets/test2.png'),
+        imgPath: require('../assets/test2.png'),
         answerOptions: [
             { answerText: 'Autole.', isCorrect: true },
             { answerText: 'Lähed ise.', isCorrect: false },
@@ -21,7 +21,7 @@ export const module_1 = [
 
     {
         questionText: 'Millistes suundades tohib jalgrattur sõitu jätkata?',
-        imgPath: require('./assets/test3.png'),
+        imgPath: require('../assets/test3.png'),
         answerOptions: [
             { answerText: 'Ainult otse.', isCorrect: true },
             { answerText: 'Otse ja paremale.', isCorrect: false },
@@ -32,7 +32,7 @@ export const module_1 = [
 
     {
         questionText: 'Milline on ristmiku ületamise õige järjekord?',
-        imgPath: require('./assets/test4.png'),
+        imgPath: require('../assets/test4.png'),
         answerOptions: [
             { answerText: 'Auto A- jalgratas - auto B.', isCorrect: false },
             { answerText: 'Jalgratas - auto A- auto B.', isCorrect: true },
@@ -42,7 +42,7 @@ export const module_1 = [
 
     {
         questionText: 'Kes ületab ristmiku esimesena ja miks?',
-        imgPath: require('./assets/test5.png'),
+        imgPath: require('../assets/test5.png'),
         answerOptions: [
             {
                 answerText:
@@ -59,7 +59,7 @@ export const module_1 = [
     },
     {
         questionText: 'Kes peab andma teed?',
-        imgPath: require('./assets/test6.png'),
+        imgPath: require('../assets/test6.png'),
         answerOptions: [
             { answerText: 'Jalgrattur A.', isCorrect: true },
             { answerText: 'Jalgrattur B.', isCorrect: false },
@@ -86,7 +86,7 @@ export const module_1 = [
     {
         questionText:
             'Kas maanteel sõitvat jalgratturit ohustavad mööduvad suured veoautod?',
-        imgPath: require('./assets/test7.png'),
+        imgPath: require('../assets/test7.png'),
         answerOptions: [
             {
                 answerText:

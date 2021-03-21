@@ -2,7 +2,7 @@ export const module_3 = [
     //TEST 3
     {
         questionText: 'Millistes suundades tohib jalgrattur sõitu jätkata?',
-        imgPath: require('./assets/test15.png'),
+        imgPath: require('../assets/test15.png'),
         answerOptions: [
             { answerText: 'Ainult paremale ja vasakule.', isCorrect: false },
             { answerText: 'Paremale, otse ja vasakule.', isCorrect: true },
@@ -12,7 +12,7 @@ export const module_3 = [
     },
     {
         questionText: 'Kes ületab ristmiku esimesena?',
-        imgPath: require('./assets/test16.png'),
+        imgPath: require('../assets/test16.png'),
         answerOptions: [
             { answerText: 'Jalgrattur A.', isCorrect: true },
             { answerText: 'Jalgrattur B.', isCorrect: false },
@@ -20,7 +20,7 @@ export const module_3 = [
     },
     {
         questionText: 'Millistes suundades tohib jalgrattur sõitu jätkata?',
-        imgPath: require('./assets/test17.png'),
+        imgPath: require('../assets/test17.png'),
         answerOptions: [
             { answerText: 'Ainult paremale.', isCorrect: false },
             { answerText: 'Ainult otse ja paremale.', isCorrect: false },

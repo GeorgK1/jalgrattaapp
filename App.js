@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading'
 import { Text, View, Pressable, Image, ScrollView } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
