@@ -1,7 +1,7 @@
 export const module_6 = [
     {
         questionText:
-            'Milline liiklusmärk osutab, et jalgrattursõidab ühesuunalisel teel?',
+            'Milline liiklusmärk osutab, et jalgrattur sõidab ühesuunalisel teel?',
         imgPath: require('../assets/test28.png'),
 
         answerOptions: [
@@ -46,7 +46,7 @@ export const module_6 = [
         ],
     },
     {
-        questionText: 'Kes ületab ristmiku esimesena?.',
+        questionText: 'Kes ületab ristmiku esimesena?',
         imgPath: require('../assets/test31.png'),
         answerOptions: [
             { answerText: 'Jalgrattur A.', isCorrect: true },
@@ -54,7 +54,7 @@ export const module_6 = [
         ],
     },
     {
-        questionText: 'Kuidas peab jalgrattur enne pööret vasakule suunda näitama',
+        questionText: 'Kuidas peab jalgrattur enne pööret vasakule suunda näitama?',
 
         answerOptions: [
             { answerText: 'Liigutama kõrvale sirutatud kätt üles-alla.', isCorrect: false },

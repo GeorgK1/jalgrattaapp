@@ -1,6 +1,6 @@
 export const module_7 = [
     {
-        questionText: 'Milline liiklusmärk keelab jalgratturile sõitmise?.',
+        questionText: 'Milline liiklusmärk keelab jalgratturile sõitmise?',
         imgPath: require('../assets/test32.png'),
         answerOptions: [
             { answerText: '1.', isCorrect: false },
@@ -11,7 +11,7 @@ export const module_7 = [
         ],
     },
     {
-        questionText: 'Millistes suundades tohib jalgrattur sõitu jätkata?.',
+        questionText: 'Millistes suundades tohib jalgrattur sõitu jätkata?',
         imgPath: require('../assets/test33.png'),
         answerOptions: [
             { answerText: 'Ainult otse ja paremale.', isCorrect: false },
@@ -22,7 +22,7 @@ export const module_7 = [
         ],
     },
     {
-        questionText: 'Milline on ristmiku ületamise õige järjekord?.',
+        questionText: 'Milline on ristmiku ületamise õige järjekord?',
         imgPath: require('../assets/test34.png'),
         answerOptions: [
             { answerText: 'Auto A, auto B, jalgratas.', isCorrect: false },

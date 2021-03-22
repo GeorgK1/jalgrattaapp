@@ -54,7 +54,7 @@ export const module_9 = [
         ],
     },
     {
-        questionText: 'Kui kahtlen, kas ristmikule lähenevad sõidukijuhid mulle teed annavad, siis:?',
+        questionText: 'Kui kahtlen, kas ristmikule lähenevad sõidukijuhid mulle teed annavad, siis?',
         answerOptions: [
             { answerText: 'suurendan enne ristmikku kiirust.', isCorrect: false },
             { answerText: 'olen valmis peatumiseks juba enne ristmikule jõudmist.', isCorrect: true},

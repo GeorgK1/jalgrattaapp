@@ -36,12 +36,11 @@ export default ({ route, navigation }) => {
     const [randomQuestionArray, setRandomQuestionArray] = useState(0);
     const [randomModuleArray, setRandomModuleArray] = useState(0);
     const randomModule = ~~(Math.random() * moduleList.length);
-    const randomQuestion = ~~(Math.random() * 10);
+    const randomQuestion = ~~(Math.random() * 9);
     const [onContinue, setOnContinue] = useState(false);
     const nextQuestion = currentQuestion + 1;
     const precentage = (score / test) * 100;
     //key for asyncstorage api
-   
 
     const handleWrongAnswer = () => {
         setShowWrongAnswer(false);
@@ -74,7 +73,7 @@ export default ({ route, navigation }) => {
             setShowScore(true);
         }
     };
-    
+
     return (
         <View style={styles.questionContainer}>
             {showScore ? (
@@ -96,7 +95,6 @@ export default ({ route, navigation }) => {
                             styles.button,
                         ]}
                         onPress={() =>
-                                
                             navigation.navigate('Tulemused', {
                                 precentage: precentage,
                                 score: score,
@@ -151,16 +149,26 @@ export default ({ route, navigation }) => {
                 <>
                     <Text style={styles.counterText}>
                         {currentQuestion + 1} / {test}
+                        Moodul {{ randomModule }}/{randomQuestion}
                     </Text>
-
-                    <Text style={styles.questionPanelText}>
-                        {moduleList[randomModule][randomQuestion].questionText}
-                    </Text>
-
+                    {moduleList[randomModule][randomQuestion].questionText !==
+                        undefined && (
+                        <Text style={styles.questionPanelText}>
+                            {
+                                moduleList[randomModule][randomQuestion]
+                                    .questionText
+                            }
+                        </Text>
+                    )}
                     {moduleList[randomModule][randomQuestion].imgPath !==
                         undefined && (
                         <Image
-                            style={{ height: '40%', width: '100%' }}
+                            style={{
+                                flex: 1,
+                                height: 500,
+                                width: 500,
+                                resizeMode: 'contain',
+                            }}
                             source={
                                 moduleList[randomModule][randomQuestion].imgPath
                             }
