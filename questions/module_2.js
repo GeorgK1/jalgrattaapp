@@ -9,26 +9,7 @@ export const module_2 = [
             { answerText: 'Kõikides suundades', isCorrect: false },
         ],
     },
-    {
-        questionText: 'Kes peab andma ristmikul teed ja miks?',
-        imgPath: require('../assets/test.png'),
-        answerOptions: [
-            {
-                answerText: 'Autojuht, sest auto ületab jalgrattateed.',
-                isCorrect: false,
-            },
-            {
-                answerText:
-                    'Autojuht, sest autol on paremalt lähenemas jalgratas.',
-                isCorrect: true,
-            },
-            {
-                answerText:
-                    'Jalgrattur, sest ta sõidab jalgrattateel, mis ristub ristmikevahelise teega.',
-                isCorrect: false,
-            },
-        ],
-    },
+    
     {
         questionText: 'Milline on ristmiku ületamise õige järjekord?',
         imgPath: require('../assets/test10.png'),

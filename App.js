@@ -35,26 +35,23 @@ export default () => {
 };
 
 const Option1 = ({ route }) => {
-    const STORAGE_KEY = '@results';
-    const [results, setResults] = useState(0);
-    const { precentage } = route.params;
-    const { score } = route.params;
-    const { testAmount } = route.params;
     
     const readData = async () => {
         try {
-          const results = await AsyncStorage.getItem(STORAGE_KEY)
-      
+          const readPrecentage = await AsyncStorage.getItem('precentage')
+          const readScore = await AsyncStorage.getItem('score')
+          const readTestAmount = await AsyncStorage.getItem('testAmount')
           if (results !== null) {
-            return results
+            return readPrecentage
           }
         } catch (e) {
-          alert('Failed to fetch the data from storage')
+            <Text style={styles.resultText}>Sul ei ole veel ühtegi testi lahendatud!</Text>
         }
       }
     return (
         <ScrollView style={styles.answerContainer}>
             <Text style={styles.resultText}>Tulemused</Text>
+            <Text style={styles.resultText}>{readData()}</Text>
             
         </ScrollView>
     );

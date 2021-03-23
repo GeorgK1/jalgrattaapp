@@ -149,4 +149,24 @@ export const module_4 = [
             },
         ],
     },
+    {
+        questionText: 'Kes peab andma ristmikul teed ja miks?',
+        imgPath: require('../assets/test.png'),
+        answerOptions: [
+            {
+                answerText: 'Autojuht, sest auto ületab jalgrattateed.',
+                isCorrect: false,
+            },
+            {
+                answerText:
+                    'Autojuht, sest autol on paremalt lähenemas jalgratas.',
+                isCorrect: true,
+            },
+            {
+                answerText:
+                    'Jalgrattur, sest ta sõidab jalgrattateel, mis ristub ristmikevahelise teega.',
+                isCorrect: false,
+            },
+        ],
+    },
 ];

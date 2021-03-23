@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View, Pressable, Image, ScrollView } from 'react-native';
+import {
+    Text,
+    View,
+    Pressable,
+    Image,
+    ScrollView,
+    Dimensions,
+} from 'react-native';
 import 'react-native-gesture-handler';
 import styles from './styles.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -40,6 +47,9 @@ export default ({ route, navigation }) => {
     const [onContinue, setOnContinue] = useState(false);
     const nextQuestion = currentQuestion + 1;
     const precentage = (score / test) * 100;
+    const dimensions = Dimensions.get('window');
+    const imageHeight = dimensions.height / 2;
+    const imageWidth = Math.round((dimensions.width * 9) / 16);
     //key for asyncstorage api
 
     const handleWrongAnswer = () => {
@@ -73,7 +83,24 @@ export default ({ route, navigation }) => {
             setShowScore(true);
         }
     };
-
+    //Store function for asyncstorage
+    const storeData = async (precentage) => {
+        try {
+            await AsyncStorage.setItem(
+                'precentage',
+                JSON.stringify(precentage)
+            );
+            await AsyncStorage.setItem('score', JSON.stringify(score));
+            await AsyncStorage.setItem(
+                'testAmount',
+                JSON.stringify(testAmount)
+                
+            );
+            
+        } catch (e) {
+            // saving error
+        }
+    };
     return (
         <View style={styles.questionContainer}>
             {showScore ? (
@@ -94,13 +121,7 @@ export default ({ route, navigation }) => {
                             },
                             styles.button,
                         ]}
-                        onPress={() =>
-                            navigation.navigate('Tulemused', {
-                                precentage: precentage,
-                                score: score,
-                                testAmount: test,
-                            })
-                        }>
+                        onPress={ () => {storeData(precentage, score, test)}}>
                         <Text style={styles.text}>Uuesti!</Text>
                     </Pressable>
                 </View>
@@ -149,32 +170,25 @@ export default ({ route, navigation }) => {
                 <>
                     <Text style={styles.counterText}>
                         {currentQuestion + 1} / {test}
-                        Moodul {{ randomModule }}/{randomQuestion}
                     </Text>
-                    {moduleList[randomModule][randomQuestion].questionText !==
-                        undefined && (
-                        <Text style={styles.questionPanelText}>
-                            {
-                                moduleList[randomModule][randomQuestion]
-                                    .questionText
-                            }
-                        </Text>
-                    )}
+
+                    <Text style={styles.questionPanelText}>
+                        {moduleList[randomModule][randomQuestion].questionText}
+                    </Text>
+
                     {moduleList[randomModule][randomQuestion].imgPath !==
                         undefined && (
                         <Image
                             style={{
                                 flex: 1,
-                                height: 500,
-                                width: 500,
-                                resizeMode: 'contain',
+                                height: imageHeight,
+                                width: imageWidth,
                             }}
                             source={
                                 moduleList[randomModule][randomQuestion].imgPath
                             }
                         />
                     )}
-
                     <ScrollView style={styles.answerContainer}>
                         {moduleList[randomModule][
                             randomQuestion
