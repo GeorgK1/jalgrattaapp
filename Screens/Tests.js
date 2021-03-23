@@ -84,23 +84,22 @@ export default ({ route, navigation }) => {
         }
     };
     //Store function for asyncstorage
-    const storeData = async (precentage) => {
+    const storeData = async (precentage, score, test) => {
+        const obj = {
+            "precentage":precentage,
+            "score":score,
+            "test":test
+        }
         try {
-            await AsyncStorage.setItem(
-                'precentage',
-                JSON.stringify(precentage)
-            );
-            await AsyncStorage.setItem('score', JSON.stringify(score));
-            await AsyncStorage.setItem(
-                'testAmount',
-                JSON.stringify(testAmount)
-                
-            );
+            await AsyncStorage.setItem('score', JSON.stringify(obj));
             
         } catch (e) {
             // saving error
         }
     };
+    clearAsyncStorage = async() => {
+        AsyncStorage.clear();
+    }
     return (
         <View style={styles.questionContainer}>
             {showScore ? (
@@ -121,7 +120,7 @@ export default ({ route, navigation }) => {
                             },
                             styles.button,
                         ]}
-                        onPress={ () => {storeData(precentage, score, test)}}>
+                        onPress={ function () { storeData(precentage, score, test); }}>
                         <Text style={styles.text}>Uuesti!</Text>
                     </Pressable>
                 </View>

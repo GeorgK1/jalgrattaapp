@@ -1,5 +1,7 @@
 //stiil
+import { Poppins_900Black } from '@expo-google-fonts/poppins';
 import { StyleSheet } from 'react-native';
+import { back } from 'react-native/Libraries/Animated/src/Easing';
 export default StyleSheet.create({
     container: {
         fontFamily: 'Poppins_400Regular',
@@ -109,13 +111,28 @@ export default StyleSheet.create({
         borderRadius: 5,
         marginLeft: 'auto',
     },
-    resultText: {
+    resultTextContainer:{
+        flexDirection: 'row',
+        backgroundColor: '#26537D',
+        textAlign: 'center',
+        
+        padding: 20,
+        width: '100%',
+        height: '100%'
+    },
+    resultTextHeader: {
         fontFamily: 'Poppins_400Regular',
-
         color: 'white',
         fontSize: 35,
         borderRadius: 5,
-        justifyContent: 'flex-start',
-        marginBottom: 'auto',
     },
+    resultText: {
+        fontFamily: 'Poppins_400Regular',
+        color: 'white',
+        fontSize: 15,
+        borderRadius: 5,
+        margin: 10,
+        
+    },
+
 });

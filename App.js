@@ -35,24 +35,27 @@ export default () => {
 };
 
 const Option1 = ({ route }) => {
-    
-    const readData = async () => {
+
+    const [res, setRes] = React.useState("");
+    const getData = async () => {
         try {
-          const readPrecentage = await AsyncStorage.getItem('precentage')
-          const readScore = await AsyncStorage.getItem('score')
-          const readTestAmount = await AsyncStorage.getItem('testAmount')
-          if (results !== null) {
-            return readPrecentage
-          }
-        } catch (e) {
-            <Text style={styles.resultText}>Sul ei ole veel ühtegi testi lahendatud!</Text>
+          const jsonValue = await AsyncStorage.getItem('score')
+          const strJson = JSON.parse(jsonValue);
+          setRes(strJson);
+        } catch(e) {
+          // error reading value
         }
-      }
+      };
+    getData(); 
     return (
-        <ScrollView style={styles.answerContainer}>
-            <Text style={styles.resultText}>Tulemused</Text>
-            <Text style={styles.resultText}>{readData()}</Text>
+       
+        <ScrollView contentContainerStyle={styles.resultTextContainer}>
             
+            
+
+            <Text style={styles.resultText}>Skoor: {res.score}</Text>
+            <Text style={styles.resultText}>Protsent: {Math.floor(res.precentage)} %</Text>
+            <Text style={styles.resultText}>Küsimuste arv: {res.test}</Text>
         </ScrollView>
     );
 };
