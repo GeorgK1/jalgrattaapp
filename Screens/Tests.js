@@ -35,6 +35,7 @@ export default ({ route, navigation }) => {
         module_9,
         module_10,
     ];
+    //hooks
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [showScore, setShowScore] = useState(false);
     const [score, setScore] = useState(0);
@@ -42,6 +43,7 @@ export default ({ route, navigation }) => {
     //states to preserve the random numbers
     const [randomQuestionArray, setRandomQuestionArray] = useState(0);
     const [randomModuleArray, setRandomModuleArray] = useState(0);
+    const [resCount, setResCount] = useState(1);
     const randomModule = ~~(Math.random() * moduleList.length);
     const randomQuestion = ~~(Math.random() * 9);
     const [onContinue, setOnContinue] = useState(false);
@@ -88,18 +90,23 @@ export default ({ route, navigation }) => {
         const obj = {
             "precentage":precentage,
             "score":score,
-            "test":test
+            "test":test,
+            "testNumber":resCount
         }
+        
         try {
-            await AsyncStorage.setItem('score', JSON.stringify(obj));
+            console.log(resCount);
+            setResCount(resCount+1)   
+            
+            await AsyncStorage.setItem(`score_${resCount}`, JSON.stringify(obj));
+           
+            
             
         } catch (e) {
             // saving error
         }
     };
-    clearAsyncStorage = async() => {
-        AsyncStorage.clear();
-    }
+    
     return (
         <View style={styles.questionContainer}>
             {showScore ? (
@@ -120,7 +127,7 @@ export default ({ route, navigation }) => {
                             },
                             styles.button,
                         ]}
-                        onPress={ function () { storeData(precentage, score, test); }}>
+                        onPress={ () => { storeData(precentage, score, test, resCount); }}>
                         <Text style={styles.text}>Uuesti!</Text>
                     </Pressable>
                 </View>

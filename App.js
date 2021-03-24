@@ -35,27 +35,61 @@ export default () => {
 };
 
 const Option1 = ({ route }) => {
+    const [resCount, setResCount] = useState(0);
+    const [result, setResult] = useState('');
+    const [ItemExists, setItemExists] = useState('true');
 
-    const [res, setRes] = React.useState("");
     const getData = async () => {
+        
         try {
-          const jsonValue = await AsyncStorage.getItem('score')
-          const strJson = JSON.parse(jsonValue);
-          setRes(strJson);
-        } catch(e) {
-          // error reading value
+            let jsonValue = await AsyncStorage.getItem(`score_1`);
+            if (jsonvalue === null) {
+                setItemExists('false');
+            }
+            const strJson = JSON.parse(jsonValue);
+            setResult(strJson);
+            return result;
+            
+        } catch (e) {
+            // error reading value
         }
-      };
-    getData(); 
+    };
+    clearAsyncStorage = async () => {
+        AsyncStorage.clear();
+    };
+    getData();
     return (
-       
-        <ScrollView contentContainerStyle={styles.resultTextContainer}>
-            
-            
-
-            <Text style={styles.resultText}>Skoor: {res.score}</Text>
-            <Text style={styles.resultText}>Protsent: {Math.floor(res.precentage)} %</Text>
-            <Text style={styles.resultText}>Küsimuste arv: {res.test}</Text>
+        <ScrollView contentContainerStyle={styles.resultTextScrollView}>
+        {ItemExists ? (
+            <View style={styles.resultTextContainer}>
+                <Text style={styles.resultText}>Skoor: {result.score}</Text>
+                <Text style={styles.resultText}>
+                    resnum: {result.testNumber}
+                </Text>
+                <Text style={styles.resultText}>
+                    Küsimuste arv: {result.test}
+                </Text>
+                <Text style={styles.resultText}>
+                    Protsent: {Math.floor(result.precentage)} %
+                </Text>
+                <Pressable
+                    style={({ pressed }) => [
+                        {
+                            backgroundColor: pressed ? '#13293D' : '#1B98E0',
+                        },
+                        styles.button,
+                    ]}
+                    onPress={() => {
+                        clearAsyncStorage();
+                    }}>
+                    <Text style={styles.text}>Puhasta tulemused!</Text>
+                </Pressable>
+            </View>
+        ) : (
+            <View style={styles.resultTextContainer}>
+                <Text style={styles.resultText}>Te ei ole veel teste lahendanud!</Text>
+            </View>
+        )}
         </ScrollView>
     );
 };

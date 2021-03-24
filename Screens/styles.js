@@ -111,14 +111,16 @@ export default StyleSheet.create({
         borderRadius: 5,
         marginLeft: 'auto',
     },
-    resultTextContainer:{
+    resultTextScrollView:{
         flexDirection: 'row',
         backgroundColor: '#26537D',
-        textAlign: 'center',
-        
         padding: 20,
         width: '100%',
         height: '100%'
+    },
+    resultTextContainer:{
+        flexDirection: 'column',
+        backgroundColor: '#26537D'
     },
     resultTextHeader: {
         fontFamily: 'Poppins_400Regular',
