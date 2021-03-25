@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
@@ -20,8 +20,10 @@ import { module_7 } from '../questions/module_7.js';
 import { module_8 } from '../questions/module_8.js';
 import { module_9 } from '../questions/module_9.js';
 import { module_10 } from '../questions/module_10.js';
+
 //importing modules and appending them into an array for easy access
 export default ({ route, navigation }) => {
+    6;
     const { test } = route.params;
     const moduleList = [
         module_1,
@@ -43,9 +45,10 @@ export default ({ route, navigation }) => {
     //states to preserve the random numbers
     const [randomQuestionArray, setRandomQuestionArray] = useState(0);
     const [randomModuleArray, setRandomModuleArray] = useState(0);
-    const [resCount, setResCount] = useState(1);
+
     const randomModule = ~~(Math.random() * moduleList.length);
     const randomQuestion = ~~(Math.random() * 9);
+
     const [onContinue, setOnContinue] = useState(false);
     const nextQuestion = currentQuestion + 1;
     const precentage = (score / test) * 100;
@@ -53,6 +56,7 @@ export default ({ route, navigation }) => {
     const imageHeight = dimensions.height / 2;
     const imageWidth = Math.round((dimensions.width * 9) / 16);
     //key for asyncstorage api
+    const [key, setKey] = useState(0);
 
     const handleWrongAnswer = () => {
         setShowWrongAnswer(false);
@@ -87,26 +91,25 @@ export default ({ route, navigation }) => {
     };
     //Store function for asyncstorage
     const storeData = async (precentage, score, test) => {
-        const obj = {
-            "precentage":precentage,
-            "score":score,
-            "test":test,
-            "testNumber":resCount
-        }
+        const generateKey = ~~(Math.random() * 10000);
+
         
+        const obj = {
+            precentage: precentage,
+            score: score,
+            questionCount: test,
+            key: generateKey,
+        };
         try {
-            console.log(resCount);
-            setResCount(resCount+1)   
-            
-            await AsyncStorage.setItem(`score_${resCount}`, JSON.stringify(obj));
-           
-            
-            
+            await AsyncStorage.setItem(`score_${generateKey}`, JSON.stringify(obj));
         } catch (e) {
             // saving error
         }
     };
-    
+    const Bind = () => {
+        storeData(precentage, score, test);
+        navigation.navigate('Testisätted');
+    };
     return (
         <View style={styles.questionContainer}>
             {showScore ? (
@@ -127,8 +130,8 @@ export default ({ route, navigation }) => {
                             },
                             styles.button,
                         ]}
-                        onPress={ () => { storeData(precentage, score, test, resCount); }}>
-                        <Text style={styles.text}>Uuesti!</Text>
+                        onPress={() => Bind()}>
+                        <Text style={styles.text}>Edasi!</Text>
                     </Pressable>
                 </View>
             ) : showWrongAnswer ? (

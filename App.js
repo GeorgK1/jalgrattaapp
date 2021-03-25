@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import AppLoading from 'expo-app-loading';
-import { Text, View, Pressable, Image, ScrollView } from 'react-native';
+import { Text, View, Pressable, Image, FlatList } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -35,21 +35,26 @@ export default () => {
 };
 
 const Option1 = ({ route }) => {
-    const [resCount, setResCount] = useState(0);
-    const [result, setResult] = useState('');
-    const [ItemExists, setItemExists] = useState('true');
-
+    const [stateResult, setStateResult] = useState([]);
+    const [arrayCopy, setArrayCopy] = useState([])
+    const [itemExists, setItemExists] = useState(true);
+    const [loadData, setLoadData] = useState(false);
+    allResults = [...stateResult]
     const getData = async () => {
-        
+        setLoadData(true);
         try {
-            let jsonValue = await AsyncStorage.getItem(`score_1`);
-            if (jsonvalue === null) {
-                setItemExists('false');
-            }
-            const strJson = JSON.parse(jsonValue);
-            setResult(strJson);
-            return result;
+            const keys = await AsyncStorage.getAllKeys();
+            const results = await AsyncStorage.multiGet(keys);
             
+            console.log(keys)
+            results.forEach((result) => allResults.push(JSON.parse(result[1])));
+            
+            setStateResult(allResults);
+            if (results === undefined || results.length == 0) {
+                setItemExists(false);
+            } else {
+                setItemExists(true);
+            }
         } catch (e) {
             // error reading value
         }
@@ -57,40 +62,68 @@ const Option1 = ({ route }) => {
     clearAsyncStorage = async () => {
         AsyncStorage.clear();
     };
-    getData();
+
     return (
-        <ScrollView contentContainerStyle={styles.resultTextScrollView}>
-        {ItemExists ? (
-            <View style={styles.resultTextContainer}>
-                <Text style={styles.resultText}>Skoor: {result.score}</Text>
-                <Text style={styles.resultText}>
-                    resnum: {result.testNumber}
-                </Text>
-                <Text style={styles.resultText}>
-                    Küsimuste arv: {result.test}
-                </Text>
-                <Text style={styles.resultText}>
-                    Protsent: {Math.floor(result.precentage)} %
-                </Text>
-                <Pressable
-                    style={({ pressed }) => [
-                        {
-                            backgroundColor: pressed ? '#13293D' : '#1B98E0',
-                        },
-                        styles.button,
-                    ]}
-                    onPress={() => {
-                        clearAsyncStorage();
-                    }}>
-                    <Text style={styles.text}>Puhasta tulemused!</Text>
-                </Pressable>
-            </View>
-        ) : (
-            <View style={styles.resultTextContainer}>
-                <Text style={styles.resultText}>Te ei ole veel teste lahendanud!</Text>
-            </View>
-        )}
-        </ScrollView>
+        <View style={styles.container}>
+            <Pressable
+                style={({ pressed }) => [
+                    {
+                        backgroundColor: pressed ? '#13293D' : '#1B98E0',
+                    },
+                    styles.button,
+                ]}
+                onPress={() => {
+                    getData();
+                }}>
+                <Text style={styles.text}>Lae oma tulemused!</Text>
+            </Pressable>
+            {loadData ? (
+                <>
+                    <FlatList
+                        data={stateResult}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item }) => {
+                            return (
+                            <View style={styles.resultTextContainer}>
+                            <Text style={styles.resultText}>{item.testnum+1})</Text>
+                            <Text style={styles.resultText}>Punktid: {item.score}</Text>
+                            <Text style={styles.resultText}>Testide arv: {item.questionCount}</Text>
+                            <Text style={styles.resultText}>Protsent: {Math.floor(item.precentage)}%</Text>
+                            
+                            </View>
+                            )
+                        }}
+                        
+                    />
+                    <Pressable
+                        style={({ pressed }) => [
+                            {
+                                backgroundColor: pressed
+                                    ? '#13293D'
+                                    : '#1B98E0',
+                            },
+                            styles.button,
+                        ]}
+                        onPress={() => {
+                            clearAsyncStorage();
+                        }}>
+                        <Text style={styles.text}>Puhasta!</Text>
+                    </Pressable>
+                </>
+            ) : !itemExists ? (
+                <View style={styles.container}>
+                    <Text style={styles.text}>
+                        Sa pole veel teste lahendanud!
+                    </Text>
+                </View>
+            ) : (
+                <View style={styles.container}>
+                    <Text style={styles.text}>
+                        
+                    </Text>
+                </View>
+            )}
+        </View>
     );
 };
 

@@ -53,14 +53,7 @@ export default StyleSheet.create({
         fontSize: 24,
         margin: 15,
     },
-    counterText: {
-        fontFamily: 'Poppins_400Regular',
-        color: 'white',
-        textAlign: 'center',
-        fontSize: 24,
-        width: 300,
-        borderRadius: 5,
-    },
+    
     questionContainer: {
         flex: 1,
         flexDirection: 'column',
@@ -119,7 +112,7 @@ export default StyleSheet.create({
         height: '100%'
     },
     resultTextContainer:{
-        flexDirection: 'column',
+        flexDirection: 'row',
         backgroundColor: '#26537D'
     },
     resultTextHeader: {

@@ -3,6 +3,7 @@ import { Text, View, Pressable } from 'react-native';
 import styles from './styles.js';
 
 export default ({ navigation }) => {
+    
     return (
         <View style={styles.container}>
             <Text style={{ color: 'white', fontSize: 36, marginBottom: 50 }}>
